@@ -3,7 +3,7 @@
 namespace TicTacToe\Player;
 
 /**
- * Class Human
+ * Class Bot
  * @package TicTacToe\Player
  */
 class Bot extends Player
@@ -11,7 +11,7 @@ class Bot extends Player
     /**
      * @var string
      */
-    protected $controlledBy = Player::BOT;
+    protected $type = Player::BOT;
 
     /**
      * @var string
@@ -19,10 +19,10 @@ class Bot extends Player
     protected $symbol = 'O';
 
     /**
-     * Human constructor.
+     * Bot constructor.
      */
     public function __construct()
     {
-        parent::__construct($this->symbol, $this->controlledBy);
+        parent::__construct($this->type, $this->symbol);
     }
 }
