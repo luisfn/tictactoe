@@ -2,6 +2,8 @@
 
 namespace TicTacToe\Game;
 
+use TicTacToe\Player\PlayerInterface;
+
 class TicTacToe implements GameBoardInterface
 {
     /**
@@ -43,11 +45,20 @@ class TicTacToe implements GameBoardInterface
      * Make a piece move
      * @param int $x
      * @param int $y
-     * @param string $player
+     * @param PlayerInterface $player
      * @return void
      */
-    public function makeMove(int $x, int $y, string $player)
+    public function makeMove(int $x, int $y, PlayerInterface $player)
     {
-        // TODO: Implement makeMove() method.
+
+        if ($x < 0 || $x > 2 || $y < 0 || $y > 2) {
+            Throw new \InvalidArgumentException('Invalid board position');
+        }
+
+        if ($this->gameState[$x][$y]) {
+            Throw new \InvalidArgumentException('Position  already used');
+        }
+
+        $this->gameState[$x][$y] = $player;
     }
 }

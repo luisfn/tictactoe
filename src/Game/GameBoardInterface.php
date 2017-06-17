@@ -2,6 +2,8 @@
 
 namespace TicTacToe\Game;
 
+use TicTacToe\Player\PlayerInterface;
+
 interface GameBoardInterface
 {
     /**
@@ -20,8 +22,8 @@ interface GameBoardInterface
      * Make a piece move
      * @param int $x
      * @param int $y
-     * @param string $player
+     * @param PlayerInterface $player
      * @return void
      */
-    public function makeMove(int $x, int $y, string $player);
+    public function makeMove(int $x, int $y, PlayerInterface $player);
 }
