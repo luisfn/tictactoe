@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
+use TicTacToe\Game\TicTacToe;
 
 /**
  * Tests for TicTacToe class
@@ -11,15 +12,6 @@ use PHPUnit\Framework\TestCase;
  */
 class TicTacToeTest extends TestCase
 {
-
-    /**
-     * @var array
-     */
-    private $expectedInitialState = [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null]
-    ];
 
     /**
      * Testing initial game state
@@ -30,11 +22,19 @@ class TicTacToeTest extends TestCase
 
         $state = $ttt->getGameState();
 
+        $this->assertEquals(3, count($state), 'Game Board should have 3 lines');
+
         foreach ($state as $line) {
             foreach ($line as $cell) {
-                $this->assertNull($cell);
+                $this->assertNull($cell, 'Every cell should be null');
             }
+
+            $this->assertEquals(3, count($line), 'Every line should have 3 cells');
         }
+
+
+
+
     }
 
 }
