@@ -5,13 +5,13 @@ namespace Tests;
 
 
 use PHPUnit_Framework_TestCase as TestCase;
-use TicTacToe\Player\Player;
+use TicTacToe\Player\Human;
 
 /**
  * Tests for TicTacToe class
  * @package Tests
  */
-class PlayerTest extends TestCase
+class HumanTest extends TestCase
 {
 
     /**
@@ -19,19 +19,9 @@ class PlayerTest extends TestCase
      */
     public function testIfPlayerIsHuman()
     {
-        $player = new Player('human', 'O');
+        $player = new Human();
 
         $this->assertEquals('human', $player->getType(), 'Player type should be human');
-    }
-
-    /**
-     * Testing player type
-     */
-    public function testIfPlayerIsBot()
-    {
-        $player = new Player('bot', 'X');
-
-        $this->assertEquals('bot', $player->getType(), 'Player type should be bot');
     }
 
     /**
@@ -39,7 +29,7 @@ class PlayerTest extends TestCase
      */
     public function testIfSymbolIsX()
     {
-        $player = new Player('bot', 'X');
+        $player = new Human();
 
         $this->assertEquals('X', $player->getSymbol(), 'Player symbol should be X');
     }

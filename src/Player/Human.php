@@ -11,7 +11,7 @@ class Human extends Player
     /**
      * @var string
      */
-    protected $controlledBy = Player::HUMAN;
+    protected $type = Player::HUMAN;
 
     /**
      * @var string
@@ -23,6 +23,6 @@ class Human extends Player
      */
     public function __construct()
     {
-        parent::__construct($this->symbol, $this->controlledBy);
+        parent::__construct($this->type, $this->symbol);
     }
 }
