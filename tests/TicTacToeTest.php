@@ -5,6 +5,7 @@ namespace Tests;
 
 use PHPUnit_Framework_TestCase as TestCase;
 use TicTacToe\Game\TicTacToe;
+use TicTacToe\Player\Bot;
 
 /**
  * Tests for TicTacToe class
@@ -31,6 +32,21 @@ class TicTacToeTest extends TestCase
 
             $this->assertEquals(3, count($line), 'Every line should have 3 cells');
         }
+    }
+
+    /**
+     * Testing player move
+     */
+    public function testPlayerMove()
+    {
+        $ttt = new TicTacToe();
+        $bot = new Bot();
+
+        $ttt->makeMove(1, 2, $bot);
+        $state = $ttt->getGameState();
+
+        $this->assertEquals($bot, $state[1][2], 'Should have a player on this position');
+
     }
 
 }
