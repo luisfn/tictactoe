@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use InvalidArgumentException;
 use PHPUnit_Framework_TestCase as TestCase;
 use TicTacToe\Game\TicTacToe;
 use TicTacToe\Player\Bot;
+use TicTacToe\Player\Human;
 
 /**
  * Tests for TicTacToe class
@@ -47,6 +49,32 @@ class TicTacToeTest extends TestCase
 
         $this->assertEquals($bot, $state[1][2], 'Should have a player on this position');
 
+    }
+
+    /**
+     * Testing position already occupied
+     * @expectedException InvalidArgumentException
+     */
+    public function testPositionOccupiedMoveException()
+    {
+        $ttt = new TicTacToe();
+        $bot = new Bot();
+        $human = new Human();
+
+        $ttt->makeMove(1, 2, $bot);
+        $ttt->makeMove(1, 2, $human);
+    }
+
+    /**
+     * Testing invalid board position
+     * @expectedException InvalidArgumentException
+     */
+    public function testInvalidBoardPositionException()
+    {
+        $ttt = new TicTacToe();
+        $bot = new Bot();
+
+        $ttt->makeMove(3, 1, $bot);
     }
 
 }
