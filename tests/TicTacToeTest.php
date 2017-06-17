@@ -31,10 +31,6 @@ class TicTacToeTest extends TestCase
 
             $this->assertEquals(3, count($line), 'Every line should have 3 cells');
         }
-
-
-
-
     }
 
 }
