@@ -61,4 +61,19 @@ class TicTacToe implements GameBoardInterface
 
         $this->gameState[$x][$y] = $player;
     }
+
+    /**
+     * Returns a PlayerInterface if any
+     * @param int $x
+     * @param int $y
+     * @return mixed
+     */
+    public function getPosition(int $x, int $y)
+    {
+        if ($x < 0 || $x > 2 || $y < 0 || $y > 2) {
+            Throw new \InvalidArgumentException('Invalid board position');
+        }
+
+        return $this->gameState[$x][$y];
+    }
 }

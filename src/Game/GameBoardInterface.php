@@ -26,4 +26,12 @@ interface GameBoardInterface
      * @return void
      */
     public function makeMove(int $x, int $y, PlayerInterface $player);
+
+    /**
+     * Returns a PlayerInterface if any
+     * @param int $x
+     * @param int $y
+     * @return PlayerInterface
+     */
+    public function getPosition(int $x, int $y);
 }

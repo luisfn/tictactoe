@@ -8,6 +8,7 @@ use PHPUnit_Framework_TestCase as TestCase;
 use TicTacToe\Game\TicTacToe;
 use TicTacToe\Player\Bot;
 use TicTacToe\Player\Human;
+use TicTacToe\Player\PlayerInterface;
 
 /**
  * Tests for TicTacToe class
@@ -69,12 +70,39 @@ class TicTacToeTest extends TestCase
      * Testing invalid board position
      * @expectedException InvalidArgumentException
      */
-    public function testInvalidBoardPositionException()
+    public function testMoveToInvalidBoardPositionException()
     {
         $ttt = new TicTacToe();
         $bot = new Bot();
 
-        $ttt->makeMove(3, 1, $bot);
+        $ttt->makeMove(3, -1, $bot);
+    }
+
+    /**
+     * Testing get position
+     */
+    public function testGetSpecificPosition()
+    {
+        $ttt = new TicTacToe();
+        $bot = new Bot();
+
+        $ttt->makeMove(0, 0, $bot);
+
+        $this->assertEquals($bot, $ttt->getPosition(0, 0), 'Should get an object');
+        $this->assertInstanceOf(PlayerInterface::class, $ttt->getPosition(0, 0));
+
+        $this->assertNull($ttt->getPosition(1, 1));
+    }
+
+    /**
+     * Testing invalid board position
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetInvalidBoardPositionException()
+    {
+        $ttt = new TicTacToe();
+
+        $ttt->getPosition(3, -1);
     }
 
 }
