@@ -6,17 +6,21 @@ namespace TicTacToe\Player;
  * Class Player
  * @package TicTacToe\Player
  */
-class Player implements PlayerInterface
+abstract class Player implements PlayerInterface
 {
-    /**
-     * @var
-     */
-    private $type;
+
+    const HUMAN = 'human';
+    const BOT = 'bot';
 
     /**
      * @var
      */
-    private $symbol;
+    protected $type;
+
+    /**
+     * @var
+     */
+    protected $symbol;
 
     /**
      * Player constructor.
