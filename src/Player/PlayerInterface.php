@@ -2,6 +2,10 @@
 
 namespace TicTacToe\Player;
 
+/**
+ * Interface PlayerInterface
+ * @package TicTacToe\Player
+ */
 interface PlayerInterface
 {
     /**

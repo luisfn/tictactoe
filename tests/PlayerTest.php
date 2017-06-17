@@ -21,7 +21,7 @@ class PlayerTest extends TestCase
     {
         $player = new Player('human', 'O');
 
-        $this->assertEquals('human', $player->getType(). 'Player type should be human');
+        $this->assertEquals('human', $player->getType(), 'Player type should be human');
     }
 
     /**
@@ -31,7 +31,7 @@ class PlayerTest extends TestCase
     {
         $player = new Player('bot', 'X');
 
-        $this->assertEquals('bot', $player->getType(). 'Player type should be bot');
+        $this->assertEquals('bot', $player->getType(), 'Player type should be bot');
     }
 
     /**
@@ -41,7 +41,7 @@ class PlayerTest extends TestCase
     {
         $player = new Player('bot', 'X');
 
-        $this->assertEquals('X', $player->getSymbol(). 'Player symbol should be X');
+        $this->assertEquals('X', $player->getSymbol(), 'Player symbol should be X');
     }
 
 }
