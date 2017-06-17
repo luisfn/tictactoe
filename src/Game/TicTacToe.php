@@ -2,6 +2,7 @@
 
 namespace TicTacToe\Game;
 
+use TicTacToe\Player\Bot;
 use TicTacToe\Player\PlayerInterface;
 
 class TicTacToe implements GameBoardInterface
@@ -76,4 +77,27 @@ class TicTacToe implements GameBoardInterface
 
         return $this->gameState[$x][$y];
     }
+
+    /**
+     * Dumb implementation of a random movement
+     */
+    public function computerMakeRandomMove()
+    {
+        $bot = new Bot();
+
+        do {
+            $randomX = mt_rand(0, 2);
+            $randomY = mt_rand(0, 2);
+
+            $freeSpace = $this->getPosition($randomX, $randomY) == null;
+
+            if ($freeSpace) {
+                $this->makeMove($randomX, $randomY, $bot);
+            }
+
+        } while ($freeSpace == false);
+    }
+
+
+
 }

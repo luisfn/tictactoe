@@ -105,4 +105,17 @@ class TicTacToeTest extends TestCase
         $ttt->getPosition(3, -1);
     }
 
+    /**
+     * Test random move
+     */
+    public function testRandomMove()
+    {
+        $ttt = new TicTacToe();
+        $human = new Human();
+        $ttt->makeMove(2, 2, $human);
+        $ttt->computerMakeRandomMove();
+
+        var_dump($ttt->getGameState());
+    }
+
 }
