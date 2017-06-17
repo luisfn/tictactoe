@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_TestCase as TestCase;
 use TicTacToe\Game\TicTacToe;
 
 /**
