@@ -1,0 +1,14 @@
+{
+    "name": "luisfn/tictactoe",
+    "description": "TicTacToe Game",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luis Fernando do Nascimento",
+            "email": "luisfn@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
