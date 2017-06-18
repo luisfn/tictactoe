@@ -131,6 +131,21 @@ class TicTacToeTest extends TestCase
     }
 
     /**
+     * Tests if a player have not completed a line
+     */
+    public function testIfPlayerHaveNotCompletedLine() {
+        $ttt = new TicTacToe();
+        $human = new Human();
+        $bot = new Bot();
+
+        $ttt->makeMove(0,0, $human);
+        $ttt->makeMove(0,1, $bot);
+        $ttt->makeMove(0,2, $human);
+
+        $this->assertFalse($ttt->checkLine(0, $human, 'Line should not be completed'));
+    }
+
+    /**
      * Tests if a player have completed a column
      */
     public function testIfPlayerCompletedColumn() {
@@ -145,15 +160,30 @@ class TicTacToeTest extends TestCase
     }
 
     /**
+     * Tests if a player have not completed a Column
+     */
+    public function testIfPlayerHaveNotCompletedColumn() {
+        $ttt = new TicTacToe();
+        $human = new Human();
+        $bot = new Bot();
+
+        $ttt->makeMove(0,0, $human);
+        $ttt->makeMove(1,0, $bot);
+        $ttt->makeMove(2,0, $human);
+
+        $this->assertFalse($ttt->checkColumn(0, $human, 'Column should not be completed'));
+    }
+
+    /**
      * Tests if a player have completed a diagonal
      */
     public function testIfPlayerCompletedDiagonal() {
         $ttt = new TicTacToe();
         $human = new Human();
 
-        $ttt->makeMove(0,0, $human);
+        $ttt->makeMove(0,2, $human);
         $ttt->makeMove(1,1, $human);
-        $ttt->makeMove(2,2, $human);
+        $ttt->makeMove(2,0, $human);
 
         $this->assertTrue($ttt->checkDiagonals($human), 'Diagonal should be completed');
     }
@@ -161,15 +191,45 @@ class TicTacToeTest extends TestCase
     /**
      * Tests if a player have completed a diagonal
      */
+    public function testIfPlayerHaveNotCompletedDiagonal() {
+        $ttt = new TicTacToe();
+        $human = new Human();
+        $bot = new Bot();
+
+        $ttt->makeMove(0,2, $human);
+        $ttt->makeMove(1,1, $bot);
+        $ttt->makeMove(2,0, $human);
+
+        $this->assertFalse($ttt->checkDiagonals($human), 'Diagonal should not be completed');
+    }
+
+    /**
+     * Tests if a player have won
+     */
     public function testIfPlayerWon() {
         $ttt = new TicTacToe();
         $human = new Human();
 
         $ttt->makeMove(0,0, $human);
-        $ttt->makeMove(1,1, $human);
-        $ttt->makeMove(2,2, $human);
+        $ttt->makeMove(1,0, $human);
+        $ttt->makeMove(2,0, $human);
 
         $this->assertTrue($ttt->checkVictory($human), 'Human player should have victory');
+    }
+
+    /**
+     * Tests if a player have not won
+     */
+    public function testIfPlayerHaveNotWon() {
+        $ttt = new TicTacToe();
+        $human = new Human();
+        $bot = new Bot();
+
+        $ttt->makeMove(0,0, $human);
+        $ttt->makeMove(1,0, $bot);
+        $ttt->makeMove(2,0, $human);
+
+        $this->assertFalse($ttt->checkVictory($human), 'Human player should have victory');
     }
 
 }

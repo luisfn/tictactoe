@@ -123,7 +123,9 @@ class TicTacToe implements GameBoardInterface
      */
     public function checkLine(int $line, PlayerInterface $player): bool
     {
-        return false;
+        return $this->getPosition($line, 0) == $player &&
+               $this->getPosition($line, 1) == $player &&
+               $this->getPosition($line, 2) == $player;
     }
 
     /**
@@ -134,7 +136,9 @@ class TicTacToe implements GameBoardInterface
      */
     public function checkColumn(int $column, PlayerInterface $player): bool
     {
-        return false;
+        return $this->getPosition(0, $column) == $player &&
+               $this->getPosition(1, $column) == $player &&
+               $this->getPosition(2, $column) == $player;
     }
 
     /**
@@ -144,7 +148,12 @@ class TicTacToe implements GameBoardInterface
      */
     public function checkDiagonals(PlayerInterface $player): bool
     {
-        return false;
+        return ($this->getPosition(0, 0) == $player &&
+                $this->getPosition(1, 1) == $player &&
+                $this->getPosition(2, 2) == $player) ||
+               ($this->getPosition(0, 2) == $player &&
+                $this->getPosition(1, 1) == $player &&
+                $this->getPosition(2, 0) == $player);
     }
 
     /**
@@ -154,6 +163,12 @@ class TicTacToe implements GameBoardInterface
      */
     public function checkVictory(PlayerInterface $player): bool
     {
-        return false;
+        return $this->checkDiagonals($player) ||
+               $this->checkLine(0, $player) ||
+               $this->checkLine(1, $player) ||
+               $this->checkLine(2, $player) ||
+               $this->checkColumn(0, $player) ||
+               $this->checkColumn(1, $player) ||
+               $this->checkColumn(2, $player);
     }
 }
