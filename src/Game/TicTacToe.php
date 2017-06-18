@@ -13,6 +13,11 @@ class TicTacToe implements GameBoardInterface
     private $gameState;
 
     /**
+     * @var
+     */
+    private $freePositions;
+
+    /**
      * TicTacToe constructor.
      */
     public function __construct()
@@ -35,6 +40,11 @@ class TicTacToe implements GameBoardInterface
      */
     public function initialize()
     {
+
+        $this->freePositions = [
+            [0,0], [0,1], [0,2], [1,0], [1,1], [1,2], [2,0], [2,1], [2,2]
+        ];
+
         $this->gameState = [
             [null, null, null],
             [null, null, null],
@@ -79,23 +89,18 @@ class TicTacToe implements GameBoardInterface
     }
 
     /**
-     * Dumb implementation of a random movement
+     * Return a random free position
+     * @return array
      */
-    public function computerMakeRandomMove()
+    public function getRandomFreePosition() : array
     {
-        $bot = new Bot();
+        if (empty($this->freePositions) ) {
+            throw new \InvalidArgumentException('There are no free positions');
+        }
 
-        do {
-            $randomX = mt_rand(0, 2);
-            $randomY = mt_rand(0, 2);
+        $randomIndex = mt_rand(0, count($this->freePositions) - 1);
 
-            $freeSpace = $this->getPosition($randomX, $randomY) == null;
-
-            if ($freeSpace) {
-                $this->makeMove($randomX, $randomY, $bot);
-            }
-
-        } while ($freeSpace == false);
+        return $this->freePositions[$randomIndex];
     }
 
 

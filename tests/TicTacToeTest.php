@@ -90,7 +90,6 @@ class TicTacToeTest extends TestCase
 
         $this->assertEquals($bot, $ttt->getPosition(0, 0), 'Should get an object');
         $this->assertInstanceOf(PlayerInterface::class, $ttt->getPosition(0, 0));
-
         $this->assertNull($ttt->getPosition(1, 1));
     }
 
@@ -106,16 +105,15 @@ class TicTacToeTest extends TestCase
     }
 
     /**
-     * Test random move
+     * Test get a free random position
      */
-    public function testRandomMove()
+    public function testRandomFreePosition()
     {
         $ttt = new TicTacToe();
-        $human = new Human();
-        $ttt->makeMove(2, 2, $human);
-        $ttt->computerMakeRandomMove();
 
-        var_dump($ttt->getGameState());
+        $pos = $ttt->getRandomFreePosition();
+
+        $this->assertEquals(2, count($pos), 'Should return an array with 2 values');
     }
 
 }
