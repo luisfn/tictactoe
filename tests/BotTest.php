@@ -34,4 +34,16 @@ class BotTest extends TestCase
         $this->assertEquals('O', $player->getSymbol(), 'Player symbol should be O');
     }
 
+
+    /**
+     * Object should be converted to JSON
+     */
+    public function testShouldConverToJson()
+    {
+        $bot = new Bot();
+
+        $this->assertJsonStringEqualsJsonString('{"type":"bot","symbol":"O"}', json_encode($bot));
+
+    }
+
 }

@@ -34,4 +34,15 @@ class HumanTest extends TestCase
         $this->assertEquals('X', $player->getSymbol(), 'Player symbol should be X');
     }
 
+    /**
+     * Object should be converted to JSON
+     */
+    public function testShouldConverToJson()
+    {
+        $human = new Human();
+
+        $this->assertJsonStringEqualsJsonString('{"type":"human","symbol":"X"}', json_encode($human));
+
+    }
+
 }
