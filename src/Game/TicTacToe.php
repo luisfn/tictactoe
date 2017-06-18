@@ -2,7 +2,6 @@
 
 namespace TicTacToe\Game;
 
-use TicTacToe\Player\Bot;
 use TicTacToe\Player\PlayerInterface;
 
 class TicTacToe implements GameBoardInterface
@@ -71,6 +70,8 @@ class TicTacToe implements GameBoardInterface
         }
 
         $this->gameState[$x][$y] = $player;
+
+        $this->removeFreePosition([$x, $y]);
     }
 
     /**
@@ -89,10 +90,10 @@ class TicTacToe implements GameBoardInterface
     }
 
     /**
-     * Return a random free position
+     * Returns a randon free position from freePositions Array
      * @return array
      */
-    public function getRandomFreePosition() : array
+    public function getRandomFreePosition(): array
     {
         if (empty($this->freePositions) ) {
             throw new \InvalidArgumentException('There are no free positions');
@@ -103,6 +104,14 @@ class TicTacToe implements GameBoardInterface
         return $this->freePositions[$randomIndex];
     }
 
-
-
+    /**
+     * Removes a position from freePositions array
+     * @param $position
+     */
+    private function removeFreePosition($position)
+    {
+        $index = array_search($position, $this->freePositions);
+        unset($this->freePositions[$index]);
+        $this->freePositions = array_values($this->freePositions);
+    }
 }

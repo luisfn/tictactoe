@@ -34,4 +34,10 @@ interface GameBoardInterface
      * @return PlayerInterface
      */
     public function getPosition(int $x, int $y);
+
+    /**
+     * Returns a randon free position from freePositions Array
+     * @return array
+     */
+    public function getRandomFreePosition() : array;
 }
