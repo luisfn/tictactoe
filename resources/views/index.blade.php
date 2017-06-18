@@ -64,7 +64,7 @@
 <body>
 <div class="container">
 
-    <input type="button" value="Make Call" onclick="makeCall()">
+    <input type="button" value="Check State" onclick="getGameState()">
     <input type="button" value="Reset" onclick="reset()">
 
     <div>
@@ -104,15 +104,32 @@
 
     $('.clickable').click(function() {
         var classes = ($(this).attr('class').split(' '));
+        var cellIdentifier = classes[2];
 
-        $('.' + classes[2]).html(playerMark);
+        $('.' + cellIdentifier).html(playerMark);
+
+        sendPlayerSelection(cellIdentifier);
 
         $(this).removeClass('clickable');
     });
 
+    function sendPlayerSelection(cellIdentifier) {
+        var pos = cellIdentifier.split('_');
+        var data = {'x': pos[1], 'y': pos[2]};
 
-    function makeCall() {
-        $.getJSON( "/getNextMove", function( json ) {
+        $.ajax({
+            type: "POST",
+            url: "/makeMove",
+            data: JSON.stringify(data),
+            success: function() {},
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    }
+
+
+    function getGameState() {
+        $.getJSON( "/getGameState", function( json ) {
             console.log( "JSON Data: " + json );
         });
     }

@@ -27,8 +27,11 @@ $container->share('emitter', Zend\Diactoros\Response\SapiEmitter::class);
 // Routes
 $route = new League\Route\RouteCollection($container);
 $route->get('/', [new GameController($container), 'index']);
-$route->get('/getNextMove', [new GameController($container), 'getNextMove']);
 $route->get('/reset', [new GameController($container), 'reset']);
+$route->get('/getGameState', [new GameController($container), 'getGameState']);
+$route->get('/getNextMove', [new GameController($container), 'getNextMove']);
+$route->post('/makeMove', [new GameController($container), 'makeMove']);
+
 
 $response = $route->dispatch($container->get('request'), $container->get('response'));
 $container->get('emitter')->emit($response);
