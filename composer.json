@@ -11,7 +11,9 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "philo/laravel-blade": "3.*"
+        "philo/laravel-blade": "3.*",
+        "league/route": "^3.0@dev",
+        "zendframework/zend-diactoros": "^1.4@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.14"
