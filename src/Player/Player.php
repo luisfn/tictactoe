@@ -2,11 +2,13 @@
 
 namespace TicTacToe\Player;
 
+use JsonSerializable;
+
 /**
  * Class Player
  * @package TicTacToe\Player
  */
-abstract class Player implements PlayerInterface
+abstract class Player implements PlayerInterface, JsonSerializable
 {
 
     const HUMAN = 'human';
@@ -49,5 +51,15 @@ abstract class Player implements PlayerInterface
     public function getSymbol(): string
     {
         return $this->symbol;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize() {
+        return [
+            'type' => $this->type,
+            'symbol' => $this->symbol,
+        ];
     }
 }
