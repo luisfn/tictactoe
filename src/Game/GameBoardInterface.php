@@ -40,4 +40,34 @@ interface GameBoardInterface
      * @return array
      */
     public function getRandomFreePosition() : array;
+
+    /**
+     * Checks if a player completed a line
+     * @param int $line
+     * @param PlayerInterface $player
+     * @return bool
+     */
+    public function checkLine(int $line, PlayerInterface $player) : bool;
+
+    /**
+     * Checks if a player completed a column
+     * @param int $column
+     * @param PlayerInterface $player
+     * @return bool
+     */
+    public function checkColumn(int $column, PlayerInterface $player) : bool;
+
+    /**
+     * Checks if a player completed a diagonal
+     * @param PlayerInterface $player
+     * @return bool
+     */
+    public function checkDiagonals(PlayerInterface $player) : bool;
+
+    /**
+     * Checks is a player won the game
+     * @param PlayerInterface $player
+     * @return bool
+     */
+    public function checkVictory(PlayerInterface $player) : bool;
 }

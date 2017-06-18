@@ -116,4 +116,60 @@ class TicTacToeTest extends TestCase
         $this->assertEquals(2, count($pos), 'Should return an array with 2 values');
     }
 
+    /**
+     * Tests if a player have completed a line
+     */
+    public function testIfPlayerCompletedLine() {
+        $ttt = new TicTacToe();
+        $human = new Human();
+
+        $ttt->makeMove(0,0, $human);
+        $ttt->makeMove(0,1, $human);
+        $ttt->makeMove(0,2, $human);
+
+        $this->assertTrue($ttt->checkLine(0, $human, 'Line should be completed'));
+    }
+
+    /**
+     * Tests if a player have completed a column
+     */
+    public function testIfPlayerCompletedColumn() {
+        $ttt = new TicTacToe();
+        $human = new Human();
+
+        $ttt->makeMove(0,0, $human);
+        $ttt->makeMove(1,0, $human);
+        $ttt->makeMove(2,0, $human);
+
+        $this->assertTrue($ttt->checkColumn(0, $human, 'Column should be completed'));
+    }
+
+    /**
+     * Tests if a player have completed a diagonal
+     */
+    public function testIfPlayerCompletedDiagonal() {
+        $ttt = new TicTacToe();
+        $human = new Human();
+
+        $ttt->makeMove(0,0, $human);
+        $ttt->makeMove(1,1, $human);
+        $ttt->makeMove(2,2, $human);
+
+        $this->assertTrue($ttt->checkDiagonals($human), 'Diagonal should be completed');
+    }
+
+    /**
+     * Tests if a player have completed a diagonal
+     */
+    public function testIfPlayerWon() {
+        $ttt = new TicTacToe();
+        $human = new Human();
+
+        $ttt->makeMove(0,0, $human);
+        $ttt->makeMove(1,1, $human);
+        $ttt->makeMove(2,2, $human);
+
+        $this->assertTrue($ttt->checkVictory($human), 'Human player should have victory');
+    }
+
 }

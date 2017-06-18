@@ -114,4 +114,46 @@ class TicTacToe implements GameBoardInterface
         unset($this->freePositions[$index]);
         $this->freePositions = array_values($this->freePositions);
     }
+
+    /**
+     * Checks if a player completed a line
+     * @param int $line
+     * @param PlayerInterface $player
+     * @return bool
+     */
+    public function checkLine(int $line, PlayerInterface $player): bool
+    {
+        return false;
+    }
+
+    /**
+     * Checks if a player completed a column
+     * @param int $column
+     * @param PlayerInterface $player
+     * @return bool
+     */
+    public function checkColumn(int $column, PlayerInterface $player): bool
+    {
+        return false;
+    }
+
+    /**
+     * Checks if a player completed a diagonal
+     * @param PlayerInterface $player
+     * @return bool
+     */
+    public function checkDiagonals(PlayerInterface $player): bool
+    {
+        return false;
+    }
+
+    /**
+     * Checks is a player won the game
+     * @param PlayerInterface $player
+     * @return bool
+     */
+    public function checkVictory(PlayerInterface $player): bool
+    {
+        return false;
+    }
 }
