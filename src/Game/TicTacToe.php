@@ -21,7 +21,11 @@ class TicTacToe implements GameBoardInterface
      */
     public function __construct()
     {
-        $this->initialize();
+        $this->loadGameState();
+
+        if (empty($_SESSION)) {
+            $this->initialize();
+        }
     }
 
     /**
@@ -39,7 +43,6 @@ class TicTacToe implements GameBoardInterface
      */
     public function initialize()
     {
-
         $this->freePositions = [
             [0,0], [0,1], [0,2], [1,0], [1,1], [1,2], [2,0], [2,1], [2,2]
         ];
@@ -49,6 +52,8 @@ class TicTacToe implements GameBoardInterface
             [null, null, null],
             [null, null, null],
         ];
+
+        $this->storeGameState();
     }
 
     /**
@@ -72,6 +77,8 @@ class TicTacToe implements GameBoardInterface
         $this->gameState[$x][$y] = $player;
 
         $this->removeFreePosition([$x, $y]);
+
+        $this->storeGameState();
     }
 
     /**
@@ -170,5 +177,34 @@ class TicTacToe implements GameBoardInterface
                $this->checkColumn(0, $player) ||
                $this->checkColumn(1, $player) ||
                $this->checkColumn(2, $player);
+    }
+
+    /**
+     *
+     */
+    public function loadGameState()
+    {
+        if ($_SESSION['freePositions']) {
+            $this->freePositions = $_SESSION['freePositions'];
+        }
+
+        if ($_SESSION['gameState']) {
+            $this->gameState = $_SESSION['gameState'];
+        }
+    }
+
+    /**
+     *
+     */
+    public function storeGameState()
+    {
+        $_SESSION['freePositions'] = $this->freePositions;
+        $_SESSION['gameState']     = $this->gameState;
+    }
+
+    public function resetGameState()
+    {
+        unset($_SESSION['freePositions']);
+        unset($_SESSION['gameState']);
     }
 }

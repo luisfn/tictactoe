@@ -3,31 +3,14 @@
 require 'vendor/autoload.php';
 
 use Philo\Blade\Blade;
+use TicTacToe\Controllers\GameController;
 use TicTacToe\Game\TicTacToe;
-use TicTacToe\Player\Bot;
-use TicTacToe\Player\Human;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
-$views = __DIR__ . '/resources/views';
-$cache = __DIR__ . '/resources/cache';
+session_start();
 
-/*$blade = new Blade($views, $cache);
+$config = require_once 'config/config.php';
 
-$ttt = new TicTacToe();
-$human = new Human();
-$bot   = new Bot();
-
-$ttt->makeMove(0,0, $human);
-$ttt->makeMove(1,1, $human);
-$ttt->makeMove(2,2, $human);
-
-$ttt->makeMove(0,2, $bot);
-$ttt->makeMove(0,1, $bot);
-$ttt->makeMove(2,0, $bot);
-
-echo $blade->view()->make('board', ['board' => $ttt->getGameState()])->render();*/
-
+// Container
 $container = new League\Container\Container;
 
 $container->share('response', Zend\Diactoros\Response::class);
@@ -37,23 +20,15 @@ $container->share('request', function () {
     );
 });
 
+$container->share('blade', new Blade($config['views'], $config['cache']));
+$container->share('tictactoe', new TicTacToe());
 $container->share('emitter', Zend\Diactoros\Response\SapiEmitter::class);
 
+// Routes
 $route = new League\Route\RouteCollection($container);
-
-$route->map('GET', '/', function (ServerRequestInterface $request, ResponseInterface $response) {
-    $response->getBody()->write('<h1>Hello, World!</h1>');
-    return $response;
-});
-
-$route->map('GET', '/test', function (ServerRequestInterface $request, ResponseInterface $response) {
-    $response->getBody()->write('<h1>Route B</h1>');
-    return $response;
-});
-
+$route->get('/', [new GameController($container), 'index']);
+$route->get('/getNextMove', [new GameController($container), 'getNextMove']);
+$route->get('/reset', [new GameController($container), 'reset']);
 
 $response = $route->dispatch($container->get('request'), $container->get('response'));
-
 $container->get('emitter')->emit($response);
-
-
