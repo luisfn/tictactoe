@@ -29,7 +29,7 @@ $route = new League\Route\RouteCollection($container);
 $route->get('/', [new GameController($container), 'index']);
 $route->get('/reset', [new GameController($container), 'reset']);
 $route->get('/getGameState', [new GameController($container), 'getGameState']);
-$route->get('/getNextMove', [new GameController($container), 'getNextMove']);
+$route->get('/getBotMove', [new GameController($container), 'getBotMove']);
 $route->post('/makeMove', [new GameController($container), 'makeMove']);
 
 

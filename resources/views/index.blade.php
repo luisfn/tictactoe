@@ -63,10 +63,6 @@
 
 <body>
 <div class="container">
-
-    <input type="button" value="Check State" onclick="getGameState()">
-    <input type="button" value="Reset" onclick="reset()">
-
     <div>
         <h1>Tic Tac Toe</h1>
         <p class="lead">A PHP written Game</p>
@@ -74,71 +70,115 @@
 
     <table>
         <tr>
-            <td class="cell clickable cell_0_0"></td>
-            <td class="cell clickable cell_0_1"></td>
-            <td class="cell clickable cell_0_2"></td>
+            <td class="cell cell_0_0 clickable" id="cell_0_0"></td>
+            <td class="cell cell_0_1 clickable" id="cell_0_1"></td>
+            <td class="cell cell_0_2 clickable" id="cell_0_2"></td>
         </tr>
         <tr>
-            <td class="cell clickable cell_1_0"></td>
-            <td class="cell clickable cell_1_1"></td>
-            <td class="cell clickable cell_1_2"></td>
+            <td class="cell cell_1_0 clickable" id="cell_1_0"></td>
+            <td class="cell cell_1_1 clickable" id="cell_1_1"></td>
+            <td class="cell cell_1_2 clickable" id="cell_1_2"></td>
         </tr>
         <tr>
-            <td class="cell clickable cell_2_0"></td>
-            <td class="cell clickable cell_2_1"></td>
-            <td class="cell clickable cell_2_2"></td>
+            <td class="cell cell_2_0 clickable" id="cell_2_0"></td>
+            <td class="cell cell_2_1 clickable" id="cell_2_1"></td>
+            <td class="cell cell_2_2 clickable" id="cell_2_2"></td>
         </tr>
     </table>
 
+    <br><input type="button" value="New Game" class="btn btn-primary" onclick="reset()">
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 <script type="text/javascript">
 
-    var playerMark = "X";
-    var botMark    = "O";
+    var playerSymbol = "X";
+    var botSymbol = "O";
 
+    /**
+     * Makes every position able to click
+     */
+    $('.cell').on( "click", function() {
+        if ($(this).hasClass('clickable')) {
+            var id = $(this).attr('id');
 
-    $('.clickable').click(function() {
-        var classes = ($(this).attr('class').split(' '));
-        var cellIdentifier = classes[2];
-
-        $('.' + cellIdentifier).html(playerMark);
-
-        sendPlayerSelection(cellIdentifier);
-
-        $(this).removeClass('clickable');
+            markPosition(id, playerSymbol)
+            sendPlayerSelection(id, 'human');
+        }
     });
 
-    function sendPlayerSelection(cellIdentifier) {
-        var pos = cellIdentifier.split('_');
-        var data = {'x': pos[1], 'y': pos[2]};
+    /**
+     * Mark position position on the board
+     */
+    function markPosition(id, symbol) {
+        var el = $('#' + id);
+        el.html(symbol);
+        el.removeClass('clickable');
+    }
+
+    /**
+     * Replicate the game board state on the ui
+     */
+    function loadGameBoard() {
+        var board = $.getJSON( "/getGameState");
+
+        board.done(function(data){
+            for (x in data) {
+                for ( y in data[x]) {
+                    if (data[x][y]) {
+                        var identifier = 'cell_' + x + '_' + y;
+                        markPosition(identifier, data[x][y].symbol);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Send a player choice to the backend
+     * @param cellIdentifier
+     */
+    function sendPlayerSelection(id, playerType) {
+        var pos = id.split('_');
+        var data = {'x': pos[1], 'y': pos[2], 'type' : playerType};
 
         $.ajax({
             type: "POST",
             url: "/makeMove",
             data: JSON.stringify(data),
-            success: function() {},
             contentType: "application/json",
-            dataType: 'json'
+            success: function() {
+                if (playerType == 'human') {
+                    makeBotMove();
+                }
+            }
         });
     }
 
+    /**
+     * Get next Bot move
+     */
+    function makeBotMove() {
+        var move = $.getJSON( "/getBotMove");
+        move.done(function(data){
+            var id = 'cell_' + data[0] + '_' + data[1];
 
-    function getGameState() {
-        $.getJSON( "/getGameState", function( json ) {
-            console.log( "JSON Data: " + json );
+            sendPlayerSelection(id, 'bot');
+            markPosition(id, botSymbol);
         });
     }
 
+    /**
+     * Reset game data
+     */
     function reset() {
-        $.getJSON( "/reset", function( json ) {
-            console.log( "JSON Data: " + json );
+        $.get( "/reset").done(function(){
+            $('.cell').html('').addClass('clickable');
         });
     }
+
+    loadGameBoard();
 </script>
 
 </body>

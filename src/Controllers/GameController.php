@@ -5,6 +5,7 @@ namespace TicTacToe\Controllers;
 use League\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TicTacToe\Player\Bot;
 use TicTacToe\Player\Human;
 
 class GameController
@@ -66,7 +67,7 @@ class GameController
      * @param ResponseInterface $response
      * @return ResponseInterface
      */
-    public function getNextMove(ServerRequestInterface $request, ResponseInterface $response)
+    public function getBotMove(ServerRequestInterface $request, ResponseInterface $response)
     {
         $pos = $this->ticTacToe->getRandomFreePosition();
 
@@ -81,10 +82,11 @@ class GameController
      */
     public function makeMove(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $pos = json_decode($request->getBody()->getContents(), true);
-        $human = new Human();
+        $data = json_decode($request->getBody()->getContents(), true);
 
-        $this->ticTacToe->makeMove($pos['x'], $pos['y'], $human);
+        $player = ($data['type'] == 'human') ? new Human() : new Bot();
+
+        $this->ticTacToe->makeMove($data['x'], $data['y'], $player);
 
         return $response;
     }
