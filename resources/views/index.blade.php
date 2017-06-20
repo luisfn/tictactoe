@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
     <style>
+        .result {
+            display: none;
+        }
+
         .cell {
             border: solid #0e0e0e;
             height: 80px;
@@ -68,25 +72,39 @@
         <p class="lead">A PHP written Game</p>
     </div>
 
-    <table>
-        <tr>
-            <td class="cell cell_0_0 clickable" id="cell_0_0"></td>
-            <td class="cell cell_0_1 clickable" id="cell_0_1"></td>
-            <td class="cell cell_0_2 clickable" id="cell_0_2"></td>
-        </tr>
-        <tr>
-            <td class="cell cell_1_0 clickable" id="cell_1_0"></td>
-            <td class="cell cell_1_1 clickable" id="cell_1_1"></td>
-            <td class="cell cell_1_2 clickable" id="cell_1_2"></td>
-        </tr>
-        <tr>
-            <td class="cell cell_2_0 clickable" id="cell_2_0"></td>
-            <td class="cell cell_2_1 clickable" id="cell_2_1"></td>
-            <td class="cell cell_2_2 clickable" id="cell_2_2"></td>
-        </tr>
-    </table>
+    <div class="row">
+        <div class="col-md-4">
+            <table>
+                <tr>
+                    <td class="cell cell_0_0 clickable" id="cell_0_0"></td>
+                    <td class="cell cell_0_1 clickable" id="cell_0_1"></td>
+                    <td class="cell cell_0_2 clickable" id="cell_0_2"></td>
+                </tr>
+                <tr>
+                    <td class="cell cell_1_0 clickable" id="cell_1_0"></td>
+                    <td class="cell cell_1_1 clickable" id="cell_1_1"></td>
+                    <td class="cell cell_1_2 clickable" id="cell_1_2"></td>
+                </tr>
+                <tr>
+                    <td class="cell cell_2_0 clickable" id="cell_2_0"></td>
+                    <td class="cell cell_2_1 clickable" id="cell_2_1"></td>
+                    <td class="cell cell_2_2 clickable" id="cell_2_2"></td>
+                </tr>
+            </table>
+            <br>
+            <input type="button" value="New Game" class="btn btn-primary" onclick="reset()">
+        </div>
 
-    <br><input type="button" value="New Game" class="btn btn-primary" onclick="reset()">
+        <div class="col-md-5">
+            <div class="jumbotron result">
+                <h1 class="message"></h1>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -153,7 +171,8 @@
             success: function(data) {
                 if (data.won === true) {
                     gameIsRunning = false;
-                    alert(data.msg);
+                    $('.result').show();
+                    $('.message').html(data.msg);
                     return;
                 }
 
@@ -182,6 +201,7 @@
      */
     function reset() {
         gameIsRunning = true;
+        $('.result').hide();
         $.get( "/reset").done(function(){
             $('.cell').html('').addClass('clickable');
         });
