@@ -19,3 +19,5 @@ If you want to execute the test cases, execute:
 ```
 ./vendor/bin/phpunit 
 ```
+
+Note: Folder resources/cache should have write permissions
