@@ -18,6 +18,11 @@
             display: none;
         }
 
+        .btn {
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
         .cell {
             border: solid #0e0e0e;
             height: 80px;
@@ -67,14 +72,17 @@
 
 <body>
 <div class="container">
-    <div>
-        <h1>Tic Tac Toe</h1>
-        <p class="lead">A PHP written Game</p>
+
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h1>Tic Tac Toe</h1>
+            <p class="lead">A PHP written Game</p>
+        </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <table>
+        <div class="col-md-6 text-center">
+            <table align="center">
                 <tr>
                     <td class="cell cell_0_0 clickable" id="cell_0_0"></td>
                     <td class="cell cell_0_1 clickable" id="cell_0_1"></td>
@@ -91,20 +99,16 @@
                     <td class="cell cell_2_2 clickable" id="cell_2_2"></td>
                 </tr>
             </table>
-            <br>
             <input type="button" value="New Game" class="btn btn-primary" onclick="reset()">
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="jumbotron result">
                 <h1 class="message"></h1>
             </div>
         </div>
+
     </div>
-
-
-
-
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -174,6 +178,11 @@
                     $('.result').show();
                     $('.message').html(data.msg);
                     return;
+                }
+
+                if (data.remainingMoves == 0) {
+                    $('.result').show();
+                    $('.message').html('It\'s a draw =^_^=');
                 }
 
                 if (playerType == 'human') {
