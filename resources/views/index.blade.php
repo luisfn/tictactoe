@@ -117,13 +117,13 @@
 
     var playerSymbol = "X";
     var botSymbol = "O";
-    var gameIsRunning = true;
+    var playIsAble = true;
 
     /**
      * Makes every position able to click
      */
     $('.cell').on( "click", function() {
-        if ($(this).hasClass('clickable') && gameIsRunning) {
+        if ($(this).hasClass('clickable') && playIsAble) {
             var id = $(this).attr('id');
 
             markPosition(id, playerSymbol)
@@ -174,7 +174,7 @@
             dataType: "json",
             success: function(data) {
                 if (data.won === true) {
-                    gameIsRunning = false;
+                    playIsAble = false;
                     $('.result').show();
                     $('.message').html(data.msg);
                     return;
@@ -186,6 +186,7 @@
                 }
 
                 if (playerType == 'human') {
+                    playIsAble = false;
                     makeBotMove();
                 }
             }
@@ -202,6 +203,7 @@
 
             sendPlayerSelection(id, 'bot');
             markPosition(id, botSymbol);
+            playIsAble = true;
         });
     }
 
@@ -209,7 +211,7 @@
      * Reset game data
      */
     function reset() {
-        gameIsRunning = true;
+        playIsAble = true;
         $('.result').hide();
         $.get( "/reset").done(function(){
             $('.cell').html('').addClass('clickable');
