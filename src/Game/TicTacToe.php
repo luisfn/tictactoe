@@ -202,9 +202,20 @@ class TicTacToe implements GameBoardInterface
         $_SESSION['gameState']     = $this->gameState;
     }
 
+    /**
+     *
+     */
     public function resetGameState()
     {
         unset($_SESSION['freePositions']);
         unset($_SESSION['gameState']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getFreePositions() : array
+    {
+        return $this->freePositions;
     }
 }

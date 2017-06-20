@@ -95,12 +95,13 @@
 
     var playerSymbol = "X";
     var botSymbol = "O";
+    var gameIsRunning = true;
 
     /**
      * Makes every position able to click
      */
     $('.cell').on( "click", function() {
-        if ($(this).hasClass('clickable')) {
+        if ($(this).hasClass('clickable') && gameIsRunning) {
             var id = $(this).attr('id');
 
             markPosition(id, playerSymbol)
@@ -148,7 +149,14 @@
             url: "/makeMove",
             data: JSON.stringify(data),
             contentType: "application/json",
-            success: function() {
+            dataType: "json",
+            success: function(data) {
+                if (data.won === true) {
+                    gameIsRunning = false;
+                    alert(data.msg);
+                    return;
+                }
+
                 if (playerType == 'human') {
                     makeBotMove();
                 }
@@ -173,6 +181,7 @@
      * Reset game data
      */
     function reset() {
+        gameIsRunning = true;
         $.get( "/reset").done(function(){
             $('.cell').html('').addClass('clickable');
         });

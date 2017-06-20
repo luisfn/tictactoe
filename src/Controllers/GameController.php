@@ -88,6 +88,16 @@ class GameController
 
         $this->ticTacToe->makeMove($data['x'], $data['y'], $player);
 
+        $won = $this->ticTacToe->checkVictory($player);
+        $remainingMoves = count($this->ticTacToe->getFreePositions());
+
+        $data = [
+            'won' => $won,
+            'remainingMoves' => $remainingMoves,
+            'msg' => $player->getSymbol() . ' won!'
+        ];
+        $response->getBody()->write(json_encode($data));
+
         return $response;
     }
 
