@@ -166,6 +166,8 @@
         var pos = id.split('_');
         var data = {'x': pos[1], 'y': pos[2], 'type' : playerType};
 
+        playIsAble = playerType != 'human';
+
         $.ajax({
             type: "POST",
             url: "/makeMove",
@@ -174,7 +176,6 @@
             dataType: "json",
             success: function(data) {
                 if (data.won === true) {
-                    playIsAble = false;
                     $('.result').show();
                     $('.message').html(data.msg);
                     return;
@@ -186,7 +187,6 @@
                 }
 
                 if (playerType == 'human') {
-                    playIsAble = false;
                     makeBotMove();
                 }
             }
