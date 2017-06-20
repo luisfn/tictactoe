@@ -2,6 +2,7 @@
 
 namespace TicTacToe\Game;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use TicTacToe\Player\PlayerInterface;
 
 class TicTacToe implements GameBoardInterface
@@ -15,17 +16,21 @@ class TicTacToe implements GameBoardInterface
      * @var
      */
     private $freePositions;
+    /**
+     * @var Session
+     */
+    private $session;
 
     /**
      * TicTacToe constructor.
+     * @param SessionInterface $session
      */
-    public function __construct()
+    public function __construct(SessionInterface $session)
     {
-        $this->loadGameState();
+        $this->session = $session;
 
-        if (empty($_SESSION)) {
-            $this->initialize();
-        }
+        $this->loadGameState();
+        $this->initialize();
     }
 
     /**
@@ -38,20 +43,33 @@ class TicTacToe implements GameBoardInterface
     }
 
     /**
+     * Returns current free positions
+     * @return array
+     */
+    public function getFreePositions() : array
+    {
+        return $this->freePositions;
+    }
+
+    /**
      * Initialize Game Board
      * @return void
      */
     public function initialize()
     {
-        $this->freePositions = [
-            [0,0], [0,1], [0,2], [1,0], [1,1], [1,2], [2,0], [2,1], [2,2]
-        ];
+        if (!$this->session->get('freePositions')) {
+            $this->freePositions = [
+                [0,0], [0,1], [0,2], [1,0], [1,1], [1,2], [2,0], [2,1], [2,2]
+            ];
+        }
 
-        $this->gameState = [
-            [null, null, null],
-            [null, null, null],
-            [null, null, null],
-        ];
+        if (!$this->session->get('gameState')) {
+            $this->gameState = [
+                [null, null, null],
+                [null, null, null],
+                [null, null, null],
+            ];
+        }
 
         $this->storeGameState();
     }
@@ -180,42 +198,33 @@ class TicTacToe implements GameBoardInterface
     }
 
     /**
-     *
+     * Check if there is game data on the session and populate the class
      */
     public function loadGameState()
     {
-        if ($_SESSION['freePositions']) {
-            $this->freePositions = $_SESSION['freePositions'];
+        if ($this->session->get('freePositions')) {
+            $this->freePositions = $this->session->get('freePositions');
         }
 
-        if ($_SESSION['gameState']) {
-            $this->gameState = $_SESSION['gameState'];
+        if ($this->session->get('gameState')) {
+            $this->gameState = $this->session->get('gameState');
         }
     }
 
     /**
-     *
+     * Transfer class data to the session
      */
     public function storeGameState()
     {
-        $_SESSION['freePositions'] = $this->freePositions;
-        $_SESSION['gameState']     = $this->gameState;
+        $this->session->set('freePositions', $this->freePositions);
+        $this->session->set('gameState', $this->gameState);
     }
 
     /**
-     *
+     * Clear the game session
      */
     public function resetGameState()
     {
-        unset($_SESSION['freePositions']);
-        unset($_SESSION['gameState']);
-    }
-
-    /**
-     * @return array
-     */
-    public function getFreePositions() : array
-    {
-        return $this->freePositions;
+        $this->session->clear();
     }
 }

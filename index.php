@@ -3,10 +3,9 @@
 require 'vendor/autoload.php';
 
 use Philo\Blade\Blade;
+use Symfony\Component\HttpFoundation\Session\Session;
 use TicTacToe\Controllers\GameController;
 use TicTacToe\Game\TicTacToe;
-
-session_start();
 
 $config = require_once 'config/config.php';
 
@@ -21,7 +20,7 @@ $container->share('request', function () {
 });
 
 $container->share('blade', new Blade($config['views'], $config['cache']));
-$container->share('tictactoe', new TicTacToe());
+$container->share('tictactoe', new TicTacToe(new Session()));
 $container->share('emitter', Zend\Diactoros\Response\SapiEmitter::class);
 
 // Routes
