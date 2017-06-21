@@ -5,6 +5,7 @@ namespace TicTacToe\Controllers;
 use League\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TicTacToe\Game\TicTacToe;
 use TicTacToe\Player\Bot;
 use TicTacToe\Player\Human;
 
@@ -88,7 +89,7 @@ class GameController
 
         $this->ticTacToe->makeMove($data['x'], $data['y'], $player);
 
-        $won = $this->ticTacToe->checkVictory($player);
+        $won = $this->ticTacToe->checkVictory($this->ticTacToe->getGameState(), $player);
         $remainingMoves = count($this->ticTacToe->getFreePositions());
 
         $data = [

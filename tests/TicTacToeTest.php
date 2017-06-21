@@ -127,7 +127,7 @@ class TicTacToeTest extends TestCase
         $this->ttt->makeMove(0,1, $human);
         $this->ttt->makeMove(0,2, $human);
 
-        $this->assertTrue($this->ttt->checkLine(0, $human, 'Line should be completed'));
+        $this->assertTrue($this->ttt->checkLine($this->ttt->getGameState(), 0, $human, 'Line should be completed'));
     }
 
     /**
@@ -141,7 +141,7 @@ class TicTacToeTest extends TestCase
         $this->ttt->makeMove(0,1, $bot);
         $this->ttt->makeMove(0,2, $human);
 
-        $this->assertFalse($this->ttt->checkLine(0, $human, 'Line should not be completed'));
+        $this->assertFalse($this->ttt->checkLine($this->ttt->getGameState(), 0, $human, 'Line should not be completed'));
     }
 
     /**
@@ -154,7 +154,7 @@ class TicTacToeTest extends TestCase
         $this->ttt->makeMove(1,0, $human);
         $this->ttt->makeMove(2,0, $human);
 
-        $this->assertTrue($this->ttt->checkColumn(0, $human, 'Column should be completed'));
+        $this->assertTrue($this->ttt->checkColumn($this->ttt->getGameState(), 0, $human, 'Column should be completed'));
     }
 
     /**
@@ -168,7 +168,7 @@ class TicTacToeTest extends TestCase
         $this->ttt->makeMove(1,0, $bot);
         $this->ttt->makeMove(2,0, $human);
 
-        $this->assertFalse($this->ttt->checkColumn(0, $human, 'Column should not be completed'));
+        $this->assertFalse($this->ttt->checkColumn($this->ttt->getGameState(), 0, $human, 'Column should not be completed'));
     }
 
     /**
@@ -181,7 +181,7 @@ class TicTacToeTest extends TestCase
         $this->ttt->makeMove(1,1, $human);
         $this->ttt->makeMove(2,0, $human);
 
-        $this->assertTrue($this->ttt->checkDiagonals($human), 'Diagonal should be completed');
+        $this->assertTrue($this->ttt->checkDiagonals($this->ttt->getGameState(), $human), 'Diagonal should be completed');
     }
 
     /**
@@ -195,7 +195,7 @@ class TicTacToeTest extends TestCase
         $this->ttt->makeMove(1,1, $bot);
         $this->ttt->makeMove(2,0, $human);
 
-        $this->assertFalse($this->ttt->checkDiagonals($human), 'Diagonal should not be completed');
+        $this->assertFalse($this->ttt->checkDiagonals($this->ttt->getGameState(), $human), 'Diagonal should not be completed');
     }
 
     /**
@@ -208,7 +208,7 @@ class TicTacToeTest extends TestCase
         $this->ttt->makeMove(1,0, $human);
         $this->ttt->makeMove(2,0, $human);
 
-        $this->assertTrue($this->ttt->checkVictory($human), 'Human player should have victory');
+        $this->assertTrue($this->ttt->checkVictory($this->ttt->getGameState(), $human), 'Human player should have victory');
     }
 
     /**
@@ -222,7 +222,6 @@ class TicTacToeTest extends TestCase
         $this->ttt->makeMove(1,0, $bot);
         $this->ttt->makeMove(2,0, $human);
 
-        $this->assertFalse($this->ttt->checkVictory($human), 'Human player should have victory');
+        $this->assertFalse($this->ttt->checkVictory($this->ttt->getGameState(), $human), 'Human player should have victory');
     }
-
 }
