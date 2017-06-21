@@ -117,13 +117,13 @@
 
     var playerSymbol = "X";
     var botSymbol = "O";
-    var playIsAble = true;
+    var playIsAllowed = true;
 
     /**
      * Makes every position able to click
      */
     $('.cell').on( "click", function() {
-        if ($(this).hasClass('clickable') && playIsAble) {
+        if ($(this).hasClass('clickable') && playIsAllowed) {
             var id = $(this).attr('id');
 
             markPosition(id, playerSymbol)
@@ -166,7 +166,7 @@
         var pos = id.split('_');
         var data = {'x': pos[1], 'y': pos[2], 'type' : playerType};
 
-        playIsAble = playerType != 'human';
+        playIsAllowed = playerType != 'human';
 
         $.ajax({
             type: "POST",
@@ -176,6 +176,7 @@
             dataType: "json",
             success: function(data) {
                 if (data.won === true) {
+                    playIsAllowed = false;
                     $('.result').show();
                     $('.message').html(data.msg);
                     return;
@@ -203,7 +204,7 @@
 
             sendPlayerSelection(id, 'bot');
             markPosition(id, botSymbol);
-            playIsAble = true;
+            playIsAllowed = true;
         });
     }
 
@@ -211,7 +212,7 @@
      * Reset game data
      */
     function reset() {
-        playIsAble = true;
+        playIsAllowed = true;
         $('.result').hide();
         $.get( "/reset").done(function(){
             $('.cell').html('').addClass('clickable');
