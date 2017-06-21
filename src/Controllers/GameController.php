@@ -70,7 +70,8 @@ class GameController
      */
     public function getBotMove(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $pos = $this->ticTacToe->getBetterMove();
+        $query = $request->getQueryParams();
+        $pos = ($query['mode'] == 'smart') ? $this->ticTacToe->getBetterMove() : $this->ticTacToe->getRandomFreePosition();
 
         $response->getBody()->write(json_encode($pos));
         return $response;

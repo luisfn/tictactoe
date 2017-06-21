@@ -99,7 +99,19 @@
                     <td class="cell cell_2_2 clickable" id="cell_2_2"></td>
                 </tr>
             </table>
-            <input type="button" value="New Game" class="btn btn-primary" onclick="reset()">
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="mode">Mode</label>
+                    <select class="form-control" id="mode">
+                        <option value="random">Random</option>
+                        <option value="smart">Smart</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="button" value="New Game" class="btn btn-primary" onclick="newGame()">
+                </div>
+            </form>
         </div>
 
         <div class="col-md-6">
@@ -199,7 +211,7 @@
      * Get next Bot move
      */
     function makeBotMove() {
-        var move = $.getJSON( "/getBotMove");
+        var move = $.getJSON( "/getBotMove?mode=" + $('#mode').val());
         move.done(function(data){
             var id = 'cell_' + data[0] + '_' + data[1];
 
@@ -212,7 +224,7 @@
     /**
      * Reset game data
      */
-    function reset() {
+    function newGame() {
         playIsAllowed = true;
         $('.result').hide();
         $.get( "/reset").done(function(){
