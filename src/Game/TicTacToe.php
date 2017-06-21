@@ -230,4 +230,81 @@ class TicTacToe implements GameBoardInterface
         $this->session->clear();
     }
 
+    /**
+     * Rates a move against a some criteria
+     * @param $gameState
+     * @param $pos
+     * @return int
+     */
+    protected function rateMove($gameState, $pos) {
+
+        $bot = new Bot();
+        $human = new Human();
+
+        $newState = $gameState;
+        $newState[$pos[0]][$pos[1]] = $bot;
+
+        // Bot Win
+        if ($this->checkVictory($newState, $bot)) {
+            return 10;
+        }
+
+        // Block Human
+        $newState = $gameState;
+        $newState[$pos[0]][$pos[1]] = $human;
+
+        if ($this->checkVictory($newState, $human)) {
+            return 9;
+        }
+
+        // Plays Middle
+        if ($pos == [1,1]) {
+            return 8;
+        }
+
+        // Opposite Corner
+        if ($pos == [0,0] && $gameState[2][2] == $human ||
+            $pos == [2,2] && $gameState[0][0] == $human ||
+            $pos == [2,0] && $gameState[0][2] == $human ||
+            $pos == [0,2] && $gameState[2][0] == $human) {
+            return 7;
+        }
+
+        // Empty Corner
+        if ($pos == [0,0] || $pos == [0,2] || $pos == [2,0] || $pos == [2,2]) {
+            return 6;
+        }
+
+        // Empty Side
+        if ($pos == [0,1] || $pos == [1,0] || $pos == [1,2] || $pos == [2,1]) {
+            return 5;
+        }
+    }
+
+    /**
+     * Finds a better move rating every free position
+     * @return array
+     */
+    public function getBetterMove() : array {
+        $rates = [];
+
+        foreach ($this->getFreePositions() as $pos) {
+            array_push($rates, [
+                'pos' => $pos,
+                'rate' => $this->rateMove($this->getGameState(), $pos)
+            ]);
+        }
+
+        $higherRate = 0;
+        $betterMove = null;
+        foreach ($rates as $rate) {
+            if ($rate['rate'] > $higherRate) {
+                $higherRate = $rate['rate'];
+                $betterMove = $rate['pos'];
+            }
+        }
+
+        return $betterMove;
+    }
+
 }

@@ -185,6 +185,7 @@
                 if (data.remainingMoves == 0) {
                     $('.result').show();
                     $('.message').html('It\'s a draw =^_^=');
+                    return;
                 }
 
                 if (playerType == 'human') {

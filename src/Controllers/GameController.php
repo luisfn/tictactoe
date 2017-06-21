@@ -70,7 +70,7 @@ class GameController
      */
     public function getBotMove(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $pos = $this->ticTacToe->getRandomFreePosition();
+        $pos = $this->ticTacToe->getBetterMove();
 
         $response->getBody()->write(json_encode($pos));
         return $response;
@@ -101,5 +101,4 @@ class GameController
 
         return $response;
     }
-
 }

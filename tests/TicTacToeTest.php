@@ -224,4 +224,12 @@ class TicTacToeTest extends TestCase
 
         $this->assertFalse($this->ttt->checkVictory($this->ttt->getGameState(), $human), 'Human player should have victory');
     }
+
+    /**
+     * Test bot move
+     */
+    public function testBotBetterMove()
+    {
+        //TODO Too many tests to execute here :(
+    }
 }
