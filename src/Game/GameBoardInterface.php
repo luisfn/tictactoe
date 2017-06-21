@@ -43,31 +43,35 @@ interface GameBoardInterface
 
     /**
      * Checks if a player completed a line
+     * @param array $gameState
      * @param int $line
      * @param PlayerInterface $player
      * @return bool
      */
-    public function checkLine(int $line, PlayerInterface $player) : bool;
+    public function checkLine(array $gameState, int $line, PlayerInterface $player) : bool;
 
     /**
      * Checks if a player completed a column
+     * @param array $gameState
      * @param int $column
      * @param PlayerInterface $player
      * @return bool
      */
-    public function checkColumn(int $column, PlayerInterface $player) : bool;
+    public function checkColumn(array $gameState, int $column, PlayerInterface $player) : bool;
 
     /**
      * Checks if a player completed a diagonal
+     * @param array $gameState
      * @param PlayerInterface $player
      * @return bool
      */
-    public function checkDiagonals(PlayerInterface $player) : bool;
+    public function checkDiagonals(array $gameState, PlayerInterface $player) : bool;
 
     /**
      * Checks is a player won the game
+     * @param array $gameState
      * @param PlayerInterface $player
      * @return bool
      */
-    public function checkVictory(PlayerInterface $player) : bool;
+    public function checkVictory(array $gameState, PlayerInterface $player) : bool;
 }
