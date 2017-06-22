@@ -1,0 +1,1 @@
+The cache folder should have write permission
