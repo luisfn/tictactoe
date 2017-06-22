@@ -21,3 +21,39 @@ If you want to execute the test cases, execute:
 ```
 
 Note: Folder resources/cache should have write permissions
+
+## Existing Routes
+
+```
+(GET) /
+``` 
+
+Shows game interface
+
+```
+(GET) /reset
+``` 
+Used to reset game state on backend
+
+```
+(GET) /getGameState
+``` 
+Retrieves current game state, used to render UI
+
+```
+(GET) /getBotMove?mode=random
+```
+Calls backend to ask for a random bot move position (x,Y)
+
+
+```
+(GET) /getBotMove?mode=smart
+```
+Calls backend to ask for a smart bot move position (x,Y)
+
+```
+(POST) /makeMove 
+```
+Send a move to be stored
+
+Parameter: x, y, type ('human' or 'bot')
