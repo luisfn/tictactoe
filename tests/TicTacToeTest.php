@@ -226,10 +226,70 @@ class TicTacToeTest extends TestCase
     }
 
     /**
-     * Test bot move
+     * Test bot move for victory
      */
-    public function testBotBetterMove()
+    public function testBotBetterMoveCheckVictory()
     {
-        //TODO Too many tests to execute here :(
+        $bot = new Bot();
+
+        $this->ttt->makeMove(0,0, $bot);
+        $this->ttt->makeMove(0,2, $bot);
+
+        $pos = $this->ttt->getBetterMove();
+
+        $this->assertEquals([0,1], $pos, 'Bot should win');
+    }
+
+    /**
+     * Test bot move blocking human victory
+     */
+    public function testBotBetterMoveBlockHumanVictory()
+    {
+        $human = new Human();
+
+        $this->ttt->makeMove(0,0, $human);
+        $this->ttt->makeMove(0,2, $human);
+
+        $pos = $this->ttt->getBetterMove();
+
+        $this->assertEquals([0,1], $pos, 'Bot should block');
+    }
+
+    /**
+     * Test bot for using middle position
+     */
+    public function testBotBetterMoveUseMiddle()
+    {
+        $human = new Human();
+
+        $this->ttt->makeMove(0,0, $human);
+
+        $pos = $this->ttt->getBetterMove();
+
+        $this->assertEquals([1,1], $pos, 'Bot should block');
+    }
+
+    /**
+     * Test bot for free corner
+     */
+    public function testBotBetterMoveUseFreeCorner()
+    {
+        $human = new Human();
+
+        $this->ttt->makeMove(1,1, $human);
+
+        $pos = $this->ttt->getBetterMove();
+
+        $this->assertEquals([0,0], $pos, 'Bot should block');
+    }
+
+    /**
+     * Test bot for free corner
+     */
+    public function testGetRandomFreePosition()
+    {
+        $pos = $this->ttt->getRandomFreePosition();
+
+        $this->assertEquals(2, count($pos), 'Should return array with x y positions');
     }
 }
