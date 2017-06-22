@@ -144,6 +144,7 @@ class TicTacToe implements GameBoardInterface
 
     /**
      * Checks if a player completed a line
+     * @param array $gameState
      * @param int $line
      * @param PlayerInterface $player
      * @return bool
@@ -157,6 +158,7 @@ class TicTacToe implements GameBoardInterface
 
     /**
      * Checks if a player completed a column
+     * @param array $gameState
      * @param int $column
      * @param PlayerInterface $player
      * @return bool
@@ -170,6 +172,7 @@ class TicTacToe implements GameBoardInterface
 
     /**
      * Checks if a player completed a diagonal
+     * @param array $gameState
      * @param PlayerInterface $player
      * @return bool
      */
@@ -185,6 +188,7 @@ class TicTacToe implements GameBoardInterface
 
     /**
      * Checks is a player won the game
+     * @param array $gameState
      * @param PlayerInterface $player
      * @return bool
      */
@@ -262,22 +266,9 @@ class TicTacToe implements GameBoardInterface
             return 8;
         }
 
-        // Opposite Corner
-        if ($pos == [0,0] && $gameState[2][2] == $human ||
-            $pos == [2,2] && $gameState[0][0] == $human ||
-            $pos == [2,0] && $gameState[0][2] == $human ||
-            $pos == [0,2] && $gameState[2][0] == $human) {
-            return 7;
-        }
-
         // Empty Corner
         if ($pos == [0,0] || $pos == [0,2] || $pos == [2,0] || $pos == [2,2]) {
-            return 6;
-        }
-
-        // Empty Side
-        if ($pos == [0,1] || $pos == [1,0] || $pos == [1,2] || $pos == [2,1]) {
-            return 5;
+            return 7;
         }
     }
 
